@@ -1,0 +1,26 @@
+{
+  "name": "sba-308a",
+  "version": "1.0.0",
+  "description": "create a single website where users can rate thier favorite dog pictures and add pictures.",
+  "homepage": "https://github.com/Noemi-24/SBA-308A#readme",
+  "bugs": {
+    "url": "https://github.com/Noemi-24/SBA-308A/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noemi-24/SBA-308A.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "axios": "^1.13.5"
+  }
+}
