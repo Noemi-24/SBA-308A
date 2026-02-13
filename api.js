@@ -9,7 +9,7 @@ const apiClient = axios.create({
   baseURL: 'https://api.thedogapi.com/v1', 
   timeout: 5000,
   headers: {
-    'x-api-key': 'API_KEY',
+    'x-api-key': API_KEY,
   },
 });
 
