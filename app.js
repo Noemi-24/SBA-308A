@@ -1,4 +1,4 @@
-import {getBreeds, createVote, addFavourite} from "./api.js";
+import {getBreeds, createVote} from "./api.js";
 
 const container = document.getElementById('card-container');
 
@@ -10,26 +10,22 @@ async function renderBreeds() {
         
         // Creating HTML structure
         const html = breeds.map(breed => `
-            <div class="card" style="width: 18rem;">
-                <img src="${breed.image.url}" id="${breed.image.id} "class="card-img-top" alt="${breed.name}">
-                <div class="card-body">
-                    <h5 class="card-title">${breed.name}</h5>
-                    <p class="card-text">${breed.description}</p>
-                    <p class="card-text"><strong>Origin: </strong>${breed.origin}</p>
-                    <p class="card-text"><strong>Temperament: </strong>${breed.temperament}</p>
-                    <p class="card-text"><strong>Weight: </strong>${breed.weight.imperial}</p>
-                    <p class="card-text"><strong>Height: </strong>${breed.height.imperial}</p>
-                    <p class="card-text"><strong>Life Span: </strong>${breed.life_span}</p>
-                </div>
-                <div>
-                    <button class="btn btn-sm btn-primary vote-btn" data-id="${breed.image.id}" aria-label="Votar por esta imagen">
-                        <i class="fa-solid fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="vote-count">12</span>
-                        <span class="visually-hidden"> votos</span>
-                    </button>
-                    <button class="btn btn-icon fav-btn" data-id="BJa4kxc4X" aria-pressed="false" aria-label="Agregar a favoritos">
-                        <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                    </button>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100" style="width: 23rem;">
+                    <img src="${breed.image.url}" id="${breed.image.id} "class="card-img-top img-fluid h-auto  d-block" alt="${breed.name}">
+                    <div class="card-body h-25">
+                        <h5 class="card-title">${breed.name}</h5>
+                        <p class="card-text"><strong>Origin: </strong>${breed.origin || 'Not available'}</p>
+                        <p class="card-text"><strong>Temperament: </strong>${breed.temperament || 'Not available'}</p>
+                        <p class="card-text"><strong>Life Span: </strong>${breed.life_span || 'Not available'}</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm vote-btn" data-id="${breed.image.id}" aria-label="Vote for ${breed.name}">
+                            <i class="fa-regular fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="vote-count">12</span>
+                            <span class="visually-hidden"> votos</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         `).join('');
@@ -64,7 +60,8 @@ container.addEventListener('click', async (event) => {
       voteBtn.classList.add('btn-success');
       setTimeout(() => voteBtn.classList.remove('btn-success'), 800);
     } catch (err) {
-      console.error(err);
+    //   console.error(err);
+      console.error('Error creating post:', err.response ? err.response.data : err.message);
       alert('Vote can not be sent. Please try again.');
     } finally {
       voteBtn.disabled = false;
@@ -72,28 +69,6 @@ container.addEventListener('click', async (event) => {
     return;
   }
 
-  // Detect favorite button click
-  const favBtn = event.target.closest('.fav-btn');
-  if (favBtn && container.contains(favBtn)) {
-    const imageId = favBtn.dataset.id;
-    if (!imageId) return;
-
-    favBtn.disabled = true;
-    try {
-      await addFavourite({ image_id: imageId });
-
-      // Toggle favorite state in the UI
-      const isFav = favBtn.getAttribute('aria-pressed') === 'true';
-      favBtn.setAttribute('aria-pressed', String(!isFav));
-      favBtn.classList.toggle('is-fav', !isFav);
-    } catch (err) {
-      console.error(err);
-      alert('Could not add to favorites. Please try again.');
-    } finally {
-      favBtn.disabled = false;
-    }
-    return;
-  }
 });
 
 // Call the render function
@@ -101,3 +76,7 @@ renderBreeds();
 
 
 
+{/* <i class="fa-solid fa-thumbs-up"></i>   pulgar arriba relleno*/}
+{/* <i class="fa-solid fa-heart"></i>   Corazón relleno */}
+{/* <i class="fa-solid fa-thumbs-down"></i>   Pulgar abajo relleno */}
+{/* <i class="fa-regular fa-thumbs-down"></i>   Pulgar abajo sin relleno */}

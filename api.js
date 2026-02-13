@@ -1,9 +1,6 @@
 import axios from 'axios';
 
 const API_KEY = 'live_QLUwjiRib0GOqQSvuVN1JxIrLB8ApRK87HLA12rl9l85BtBWmYxO7gs4vUHrrxnX';
-// axios.defaults.baseURL = "https://api.thedogapi.com/v1";
-// axios.defaults.headers.common["x-api-key"] = API_KEY;
-
 
 const apiClient = axios.create({
   baseURL: 'https://api.thedogapi.com/v1', 
@@ -16,7 +13,12 @@ const apiClient = axios.create({
 // Get all breeds
 export const getBreeds = async () => {
   try {
-    const response = await apiClient.get('/breeds'); 
+    const response = await apiClient.get('/breeds', {
+        params: {
+            limit: 200, 
+            order: 'DESC', // Order by descending to get the latest breeds
+        }
+    }); 
     return response.data; // The actual data is in the 'data' property of the response
   } catch (error) {
     console.error('Error fetching breeds:', error);
@@ -42,16 +44,6 @@ export const createVote = async (postData) => {
   }
 };
 
-//Post a favourite
-export const addFavourite = async (postData) => {
-  try {
-    const response = await apiClient.post('/favourites', postData); 
-    return response.data;
-  } catch (error) {
-    console.error('Error creating post:', error);
-    throw error;
-  }
-};
 
 
 // Export the functions for use in other files
