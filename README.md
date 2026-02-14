@@ -1,4 +1,4 @@
-# Dog Lovers - Dog Breed Explorer (SBA 308A - ADV JAVASCRIPT)
+# Dog Lovers - The Ultimate Dog Gallery (SBA 308A - ADV JAVASCRIPT)
 
 A single-page web application that allows users to explore different dog breeds from around the world and vote for their favorites using The Dog API.
 
