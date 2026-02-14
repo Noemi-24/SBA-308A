@@ -3,21 +3,58 @@ import {createBreedCard} from "./ui.js";
 
 const container = document.getElementById('card-container');
 
+// Global variables for pagination
+let allBreeds = [];
+let currentPage = 0;
+let breedsPerPage = 6; 
+
 // Function to render the API response
-async function renderBreeds() {   
-    
+// Load all breeds and show first page
+async function loadBreeds() {   
     try {
-        const breeds = await getBreeds(); // Using exported function
-        
-        // Creating HTML structure
-        const html = breeds.map(breed => createBreedCard(breed)).join('');
-        
-        container.innerHTML = html;
+        allBreeds = await getBreeds(); 
+        console.log(`Total breeds loaded: ${allBreeds.length}`);
+        renderCurrentPage(); 
     } catch (error) {
-        container.innerHTML = `<p>Error: ${error.message}</p>`;
+        container.innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
         console.error('Error:', error);
     }
 }
+
+// Render breeds with pagination
+function renderCurrentPage() {
+    const start = currentPage * breedsPerPage;
+    const end = start + breedsPerPage;
+    const breedsToShow = allBreeds.slice(start, end);
+    
+    const html = breedsToShow.map(breed => createBreedCard(breed)).join('');
+    container.innerHTML = html;
+    
+    // update page info
+    const totalPages = Math.ceil(allBreeds.length / breedsPerPage);
+    document.getElementById('page-info').textContent = `Page ${currentPage + 1} of ${totalPages}`;
+    
+    // Disable buttons if on first or last page
+    document.getElementById('prev-btn').disabled = currentPage === 0;
+    document.getElementById('next-btn').disabled = currentPage >= totalPages - 1;
+}
+
+// Previous button
+document.getElementById('prev-btn').addEventListener('click', () => {
+    if (currentPage > 0) {
+        currentPage--;
+        renderCurrentPage();
+    }
+});
+
+// Next button
+document.getElementById('next-btn').addEventListener('click', () => {
+    const totalPages = Math.ceil(allBreeds.length / breedsPerPage);
+    if (currentPage < totalPages - 1) {
+        currentPage++;
+        renderCurrentPage();
+    }
+});
 
 
 container.addEventListener('click', async (event) => {
@@ -52,12 +89,5 @@ container.addEventListener('click', async (event) => {
 
 });
 
-// Call the render function
-renderBreeds();
-
-
-
-{/* <i class="fa-solid fa-thumbs-up"></i>   pulgar arriba relleno*/}
-{/* <i class="fa-solid fa-heart"></i>   Corazón relleno */}
-{/* <i class="fa-solid fa-thumbs-down"></i>   Pulgar abajo relleno */}
-{/* <i class="fa-regular fa-thumbs-down"></i>   Pulgar abajo sin relleno */}
+// Call the loadBreeds function
+loadBreeds(); 
