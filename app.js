@@ -11,15 +11,12 @@ async function renderBreeds() {
         // Creating HTML structure
         const html = breeds.map(breed => `
             <div class="col-md-4 mb-4">
-                <div class="card h-100" style="width: 23rem;">
-                    <img src="${breed.image.url}" id="${breed.image.id} "class="card-img-top img-fluid h-auto  d-block" alt="${breed.name}">
-                    <div class="card-body h-25">
+                <div class="card h-100" style="width: 22rem;">
+                    <div class="" style="position: relative; padding-top: 100%; overflow: hidden;">
+                        <img src="${breed.image.url}" id="${breed.image.id}" class="card-img-top w-100 h-100 position-absolute top-0 start-0" alt="${breed.name}">
+                    </div>                       
+                    <div class="card-footer d-flex justify-content-between align-items-center">
                         <h5 class="card-title">${breed.name}</h5>
-                        <p class="card-text"><strong>Origin: </strong>${breed.origin || 'Not available'}</p>
-                        <p class="card-text"><strong>Temperament: </strong>${breed.temperament || 'Not available'}</p>
-                        <p class="card-text"><strong>Life Span: </strong>${breed.life_span || 'Not available'}</p>
-                    </div>
-                    <div>
                         <button class="btn btn-sm vote-btn" data-id="${breed.image.id}" aria-label="Vote for ${breed.name}">
                             <i class="fa-regular fa-thumbs-up" aria-hidden="true"></i>
                             <span class="vote-count">12</span>
