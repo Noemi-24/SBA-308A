@@ -1,3 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+.quicksand-header {
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.quicksand-body {
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+
 *{
     margin: 0;
     padding: 0;
@@ -5,8 +22,21 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
+    background-color: #89CFF0;
+}
+
+.gradient-title {
+    background: linear-gradient(135deg, #39393b 0%, #173342 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #495057;
+    line-height: 1.6;
 }
 
 .container {
@@ -15,9 +45,75 @@ body {
     padding: 20px;
 }   
 
+h1 {
+    font-size: 3rem;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 10px;
+}
 
+h5 {
+    font-size: 1.2rem;
+    color: #000000;
+    margin-bottom: 20px;
+}
 
-.card-img-fixed {
-  width: 100%;      
+p {
+    font-size: 2rem;
+    color: #626365;
+    margin-bottom: 30px;
+}
 
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.vote-btn {
+    border: none;
+    color: #343a40;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.vote-btn:hover {
+    transform: scale(1.3);
+}
+
+.vote-btn.btn-success {
+    background-color: #89CFF0 !important;
+    color: white !important;
+}
+
+.pagination .page-link {
+    background-color: #ffffff;
+    border-color: #89CFF0;
+    color: #343a40;
+    font-weight: 600;
+}
+
+.pagination .page-link:hover {
+    background-color: #89CFF0;
+    border-color: #89CFF0;
+    color: #ffffff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #6BB8E0;
+    border-color: #6BB8E0;
+}
+
+.pagination .page-link:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    p {
+        font-size: 1.2rem; 
+    }
 }
