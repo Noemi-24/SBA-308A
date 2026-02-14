@@ -8,7 +8,9 @@ let allBreeds = [];
 let currentPage = 0;
 let breedsPerPage = 6; 
 
-// Function to render the API response
+//load votes from localStorage
+const voteCounts = JSON.parse(localStorage.getItem('dogVotes')) || {};
+
 // Load all breeds and show first page
 async function loadBreeds() {   
     try {
@@ -27,7 +29,12 @@ function renderCurrentPage() {
     const end = start + breedsPerPage;
     const breedsToShow = allBreeds.slice(start, end);
     
-    const html = breedsToShow.map(breed => createBreedCard(breed)).join('');
+    const html = breedsToShow.map(breed => {
+        const imageId = breed.image?.id || breed.reference_image_id || '';
+        const currentVotes = voteCounts[imageId] || 0;
+        return createBreedCard(breed, currentVotes);
+    }).join('');
+
     container.innerHTML = html;
     
     // update page info
@@ -69,11 +76,17 @@ container.addEventListener('click', async (event) => {
             // Call API to create a vote
             await createVote({ image_id: imageId, value: 1 });
 
-            //Update vote count in the UI
+            // Update votes in memory
+            voteCounts[imageId] = (voteCounts[imageId] || 0) + 1;
+            console.log(`Vote added for ${imageId}. New count: ${voteCounts[imageId]}`); // debug
+            
+            // Save to localStorage
+            localStorage.setItem('dogVotes', JSON.stringify(voteCounts));
+
+            // Update UI
             const countEl = voteBtn.querySelector('.vote-count');
             if (countEl) {
-                const current = Number(countEl.textContent) || 0;
-                countEl.textContent = String(current + 1);
+                countEl.textContent = voteCounts[imageId];
             }
 
             voteBtn.classList.add('btn-success');
